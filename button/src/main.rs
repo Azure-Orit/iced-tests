@@ -3,15 +3,20 @@ use iced::widget::{
     button, column, container,
     row, 
 };
-use iced::{Element, Length, Sandbox};
+use iced::{Element, Length, Sandbox, window::Icon};
 
+static ICON: &[u8] = include_bytes!("../assets/icon.png");
+const ICON_HEIGHT: u32 = 64;
+const ICON_WIDTH: u32 = 64;
 pub fn main() {
-
+    let image = image::load_from_memory(ICON).unwrap();
+    let icon = iced::window::Icon::from_rgba(image.as_bytes().to_vec(), ICON_HEIGHT, ICON_WIDTH).unwrap();
+    
     let settings = iced::settings::Settings {
         window: iced::window::Settings {
             size: (300, 300),
             min_size: Some((300, 300)),
-            //transparent: (true),
+            icon: Some(icon),
             ..Default::default()
         },
         ..Default::default()
@@ -24,7 +29,6 @@ pub fn main() {
 struct Button {
     theme: Theme,
 }
-
 
 #[derive(Debug, Clone)]
 enum Message {
